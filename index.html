@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="">
+	<script src="http://modernizr.com/downloads/modernizr-latest.js"></script>
+</head>
+<body>
+
+	<!-- first try HTML5 playback: if serving as XML, expand `controls` to `controls="controls"` and autoplay likewise -->
+	<!-- warning: playback does not work on iOS3 if you include the poster attribute! fixed in iOS4.0 -->
+	<video width="640" height="360" controls preload>
+		<!-- MP4 must be first for iPad! -->
+		<source src="media/video.mp4" type="video/mp4"/><!-- Safari / iOS video  / IE9 UP  -->
+		<source src="media/video.ogv"type='video/ogg; codecs="theora, vorbis"'><!-- Firefox / Opera / Chrome10 -->		
+		<!-- <source src="media/video.webm" type="video/ogg"/><!--  IE 9 已支援mp4 -->
+		
+		<!-- fallback to Flash: -->
+		<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,0,0" width="640" height="360" id="player1" align="middle">
+			<param name="movie" value="media/video.swf"/>
+			<param name="menu" value="false"/>
+			<param name="quality" value="high"/>
+			<param name="bgcolor" value="#FFFFFF"/>
+			<noscript><a rel="nofollow" href ="http://www.java.com">Install or enable JAVA</a></noscript>
+			<embed src="video.swf" menu="false" quality="high" bgcolor="#FFFFFF" width="320" height="240" name="player" align="middle" allowScriptAccess="sameDomain" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer"/>
+		</object> 
+	</video>
+	<!-- you *must* offer a download link as they may be able to play the file locally. customise this bit all you want -->
+	<p>	<strong>Download Video:</strong>
+		Closed Format:	<a href="media/video.mp4">"MP4"</a>
+		Open Format:	<a href="media/video.ogv">"Ogv"</a>
+	</p>
+
+	<p id="loaction">
+		(<span class="latitude"></span>,
+		<span class="longitude"></span>)
+	</p>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
+<script>
+var show_map = function(position) {
+	var latitude  = position.coords.latitude;
+	var longitude = position.coords.longitude;
+
+	$('#loaction .latitude').text(latitude);
+	$('#loaction .longitude').text(longitude);
+
+
+// let's show a map or do something interesting!
+};
+var get_location = function() {
+	if (Modernizr.geolocation) { 
+		navigator.geolocation.getCurrentPosition(show_map);
+	} else {
+		// no native support; maybe try Gears?
+	}
+
+	
+};
+
+get_location();
+
+
+</script>
+	
+</body>
+</html>
